@@ -38,10 +38,6 @@ hs_err_*.log
 replay_*.log
 *.hprof
 *.jfr
-/gradle/wrapper/gradle-wrapper.jar
-/gradlew
-/gradlew.bat
-/src/main/resources/assets/minegpt/icon.png
 
 # python (brain/)
 
