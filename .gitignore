@@ -38,3 +38,22 @@ hs_err_*.log
 replay_*.log
 *.hprof
 *.jfr
+/gradle/wrapper/gradle-wrapper.jar
+/gradlew
+/gradlew.bat
+/src/main/resources/assets/minegpt/icon.png
+
+# python (brain/)
+
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# minegpt data (recordings, episodes, checkpoints)
+
+/data/
+*.ckpt
+*.safetensors

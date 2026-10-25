@@ -3,14 +3,10 @@
 	"id": "minegpt",
 	"version": "${version}",
 	"name": "MineGPT",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "An autonomous Minecraft agent. This mod is MineGPT's body: it reads game state and carries out actions for the Python brain.",
 	"authors": [
-		"Me!"
+		"Rohan"
 	],
-	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
-	},
 	"license": "CC0-1.0",
 	"icon": "assets/minegpt/icon.png",
 	"environment": "*",
