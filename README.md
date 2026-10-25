@@ -23,6 +23,22 @@ The project has two halves:
 ./gradlew build          # jar in build/libs/
 ```
 
+## In-game commands
+
+All commands are client-side, so they work on any server.
+
+| Command | What it does |
+|---|---|
+| `/minegpt goal <text>` | Sets the goal shown in the HUD (the brain will act on it from Phase 4) |
+| `/minegpt pause`, `/minegpt resume` | Lets go of the controls, or takes them back. **F8** does the same |
+| `/minegpt stop` | Clears the goal and releases every key |
+| `/minegpt status` | Shows the mode, goal and recording state |
+| `/minegpt act <json>` | Runs one low-level action, for example `{"type":"move","keys":["forward"],"ticks":40}` |
+| `/minegpt obs` | Saves the current observation to `run/minegpt/observation.json` |
+| `/minegpt record start`, `/minegpt record stop` | Records your gameplay to `run/minegpt/recordings/` |
+
+The observation, action and recording formats are in [docs/protocol.md](docs/protocol.md).
+
 ## Running the brain
 
 See [brain/README.md](brain/README.md).
