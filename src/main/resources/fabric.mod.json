@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "minegpt",
+	"version": "${version}",
+	"name": "MineGPT",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/minegpt/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.xzier9.minegpt.MineGPT"
+		],
+		"client": [
+			"com.xzier9.minegpt.client.MineGPTClient"
+		]
+	},
+	"mixins": [
+		"minegpt.mixins.json",
+		{
+			"config": "minegpt.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.20.1",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
