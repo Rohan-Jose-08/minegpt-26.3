@@ -28,3 +28,20 @@ jobs:
         with:
           name: Artifacts
           path: build/libs/
+
+  brain:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: brain
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v6
+      - name: setup python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: install brain
+        run: pip install -e ".[dev]"
+      - name: test
+        run: pytest
