@@ -2,6 +2,7 @@ package com.xzier9.minegpt.client.observe;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -9,12 +10,16 @@ import java.util.Map;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.server.IntegratedServer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -22,6 +27,7 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.LevelResource;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -65,6 +71,7 @@ public final class Observer {
 		obs.addProperty("raining", level.isRaining());
 		obs.addProperty("thundering", level.isThundering());
 		obs.addProperty("multiplayer", !mc.hasSingleplayerServer());
+		obs.addProperty("world", worldId(mc));
 
 		obs.add("player", playerState(player));
 		obs.add("inventory", inventory(player.getInventory()));
@@ -75,6 +82,20 @@ public final class Observer {
 			obs.add("grid", grid(player, level));
 		}
 		return obs;
+	}
+
+	/**
+	 * Names the world the player is in, so the brain can keep what it remembers about one
+	 * world apart from another: the save folder in singleplayer, the server address otherwise.
+	 */
+	public static String worldId(Minecraft mc) {
+		IntegratedServer server = mc.getSingleplayerServer();
+		if (server != null) {
+			Path folder = server.getWorldPath(LevelResource.ROOT).normalize().getFileName();
+			return "singleplayer:" + (folder != null ? folder.toString() : server.getWorldData().getLevelName());
+		}
+		ServerData data = mc.getCurrentServer();
+		return "server:" + (data != null ? data.ip : "unknown");
 	}
 
 	private static JsonObject playerState(LocalPlayer player) {
@@ -160,8 +181,14 @@ public final class Observer {
 			if (entity instanceof LivingEntity living) {
 				e.addProperty("health", living.getHealth());
 			}
+			e.addProperty("hostile", entity instanceof Enemy);
 			if (entity instanceof Player other) {
 				e.addProperty("name", other.getName().getString());
+			}
+			if (entity instanceof ItemEntity drop) {
+				// What is lying on the ground, so the brain knows what is worth picking up.
+				e.addProperty("item", BuiltInRegistries.ITEM.getKey(drop.getItem().getItem()).toString());
+				e.addProperty("count", drop.getItem().getCount());
 			}
 			out.add(e);
 		}

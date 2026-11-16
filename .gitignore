@@ -53,3 +53,5 @@ __pycache__/
 /data/
 *.ckpt
 *.safetensors
+*.gguf
+brain/minegpt-data/

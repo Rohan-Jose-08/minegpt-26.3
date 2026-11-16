@@ -3,6 +3,7 @@
 	"package": "com.xzier9.minegpt.client.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"client": [
+		"MinecraftMixin",
 		"MultiPlayerGameModeMixin"
 	],
 	"injectors": {
@@ -11,4 +12,4 @@
 	"overwrites": {
 		"requireAnnotations": true
 	}
-}
+}

@@ -1,13 +1,22 @@
 [project]
 name = "minegpt-brain"
-version = "0.1.0"
+version = "0.11.0"
 description = "MineGPT's brain: planner, skill library and training code that drives the Fabric mod."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["pytest>=8"]
+env = ["gymnasium>=1.0", "numpy>=1.26"]
+# The Claude API backend for the agent. The local backend needs nothing extra.
+agent = ["anthropic>=2.3"]
+dev = ["pytest>=8", "gymnasium>=1.0", "numpy>=1.26"]
+
+[project.scripts]
+minegpt-agent = "minegpt_brain.agent.__main__:main"
+minegpt-bench = "minegpt_brain.bench.__main__:main"
+minegpt-train = "minegpt_brain.train.__main__:main"
+minegpt-practice = "minegpt_brain.practice.__main__:main"
 
 [build-system]
 requires = ["hatchling"]
